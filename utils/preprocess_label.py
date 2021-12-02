@@ -151,5 +151,3 @@ def get_neutral_data_frame(labels):
     df_ = df_.fillna(0)
     return df_
 
-for i in list_label_aspect:
-  print(i)
