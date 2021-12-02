@@ -16,7 +16,9 @@ def read_label(path):
 aspect_labels = read_label(aspect_path)
 AS_labels = read_label(SA_path)
 
-
+transform_label_aspect = MultiLabelBinarizer().fit([aspect_labels])
+list_label_aspect = transform_label_aspect.classes_
+transform_label_SA = MultiLabelBinarizer().fit([AS_labels])
 
 def find_start_end(label):
   start = 0
@@ -91,20 +93,10 @@ def show_label(list_label, pred_as, pred_pos, pred_neg, pred_neu):
 
 
 
-def Binary_label():
-
-
-    transform_label_aspect = MultiLabelBinarizer().fit([aspect_labels])
-    list_label_aspect = transform_label_aspect.classes_
-    transform_label_SA = MultiLabelBinarizer().fit([AS_labels])
-
-    return transform_label_aspect, transform_label_SA, list_label_aspect
-
       
 def create_label_dataframe(labels):
     aspect, polarity,_ = separate_label(labels)
-    bi_label_aspect, _, _ = Binary_label()
-    aspect_tf = bi_label_aspect.transform(aspect)
+    aspect_tf = transform_label_aspect.transform(aspect)
     for index1,label in enumerate(aspect_tf):
         count = 0
         for index2,a in enumerate(label):
@@ -116,7 +108,9 @@ def create_label_dataframe(labels):
                 else:
                     aspect_tf[index1][index2] = 3
                 count+=1
-    return pd.DataFrame(aspect_tf)
+    aspect_tf = pd.DataFrame(aspect_tf)
+    aspect_tf.columns = aspect_labels
+    return aspect_tf
 
 def get_aspect_data_frame(labels):
     df_ = create_label_dataframe(labels)
@@ -153,3 +147,4 @@ def get_neutral_data_frame(labels):
         df_[aspect]=df_[aspect].replace(3,1)
     df_ = df_.fillna(0)
     return df_
+

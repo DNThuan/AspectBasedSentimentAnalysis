@@ -48,6 +48,7 @@ class Preprocessing_Label(object):
       self.neutral = neutral
     
     def make_label_dataframe(self):
+ 
       if self.aspect:
         df = pre_label.get_aspect_data_frame(self.label)
       elif self.positive:
@@ -56,4 +57,5 @@ class Preprocessing_Label(object):
         df = pre_label.get_negative_data_frame(self.label)
       else:
         df = pre_label.get_neutral_data_frame(self.label)
+
       return df

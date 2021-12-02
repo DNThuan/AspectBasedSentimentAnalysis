@@ -1,14 +1,13 @@
 from utils import preprocessing
 
 
-texts = ["Kháchhhh Sạn đẹp, dc cái giá rẻ chỉ hon 300k một đêm @@@",
-        "Khách sạn gần trung tâm, cách chợ 500m"]
+y_label = ['{HOTEL#DESIGN&FEATURES, positive}, {HOTEL#GENERAL, negative}',
+            '{LOCATION#GENERAL, positive}']
 
-pre_review = preprocessing.Preprocessing_Review(texts).process()
+pre_label = preprocessing.Preprocessing_Label(y_label,aspect=True).make_label_dataframe()
 
 
-print(texts)
-print(pre_review)
+print(pre_label)
 
 
 
