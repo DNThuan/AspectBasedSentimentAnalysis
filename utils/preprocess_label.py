@@ -3,11 +3,9 @@ import pandas as pd
 import json
 from sklearn.preprocessing import MultiLabelBinarizer
 
-aspect_path_1 = "./Label/aspect.json"
-SA_path_1 = "./Label/SA.json"
+aspect_path = "./Label/aspect.json"
+SA_path = "./Label/SA.json"
 
-aspect_path_2 = "/Label/aspect.json"
-SA_path_2 = "/Label/SA.json"
 
 def read_label(path):
   with open(path) as f:
@@ -15,12 +13,11 @@ def read_label(path):
   f.close()
   return data
   
-try:
-  aspect_labels = read_label(aspect_path_1)
-  AS_labels = read_label(SA_path_1)
-except:
-  aspect_labels = read_label(aspect_path_2)
-  AS_labels = read_label(SA_path_2)
+
+
+aspect_labels = read_label(aspect_path)
+AS_labels = read_label(SA_path)
+
 
 transform_label_aspect = MultiLabelBinarizer().fit([aspect_labels])
 list_label_aspect = transform_label_aspect.classes_
@@ -115,7 +112,7 @@ def create_label_dataframe(labels):
                     aspect_tf[index1][index2] = 3
                 count+=1
     aspect_tf = pd.DataFrame(aspect_tf)
-    aspect_tf.columns = aspect_labels
+    aspect_tf.columns = list_label_aspect
     return aspect_tf
 
 def get_aspect_data_frame(labels):
@@ -154,3 +151,5 @@ def get_neutral_data_frame(labels):
     df_ = df_.fillna(0)
     return df_
 
+for i in list_label_aspect:
+  print(i)
