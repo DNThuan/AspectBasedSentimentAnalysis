@@ -3,8 +3,8 @@ import pandas as pd
 import json
 from sklearn.preprocessing import MultiLabelBinarizer
 
-aspect_path = "/Label/aspect.json"
-SA_path = "/Label/SA.json"
+aspect_path = "/content/AspectBasedSentimentAnalysis/Label/aspect.json"
+SA_path = "/content/AspectBasedSentimentAnalysis/Label/SA.json"
 
 
 def read_label(path):
