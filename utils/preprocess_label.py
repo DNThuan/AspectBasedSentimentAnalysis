@@ -1,27 +1,6 @@
 import numpy as np
 import pandas as pd
-import json
-from sklearn.preprocessing import MultiLabelBinarizer
 
-aspect_path = "/content/AspectBasedSentimentAnalysis/Label/aspect.json"
-SA_path = "/content/AspectBasedSentimentAnalysis/Label/SA.json"
-
-
-def read_label(path):
-  with open(path) as f:
-    data = json.load(f)
-  f.close()
-  return data
-  
-
-
-aspect_labels = read_label(aspect_path)
-AS_labels = read_label(SA_path)
-
-
-transform_label_aspect = MultiLabelBinarizer().fit([aspect_labels])
-list_label_aspect = transform_label_aspect.classes_
-transform_label_SA = MultiLabelBinarizer().fit([AS_labels])
 
 def find_start_end(label):
   start = 0
@@ -95,9 +74,7 @@ def show_label(list_label, pred_as, pred_pos, pred_neg, pred_neu):
   return labels
 
 
-
-      
-def create_label_dataframe(labels):
+def create_label_dataframe(labels,list_label_aspect,transform_label_aspect):
     aspect, polarity,_ = separate_label(labels)
     aspect_tf = transform_label_aspect.transform(aspect)
     for index1,label in enumerate(aspect_tf):
@@ -115,39 +92,38 @@ def create_label_dataframe(labels):
     aspect_tf.columns = list_label_aspect
     return aspect_tf
 
-def get_aspect_data_frame(labels):
-    df_ = create_label_dataframe(labels)
-    for aspect in aspect_labels:
+def get_aspect_data_frame(labels,list_label_aspect,transform_label_aspect):
+    df_ = create_label_dataframe(labels,list_label_aspect,transform_label_aspect)
+    for aspect in list_label_aspect:
         df_[aspect]=df_[aspect].replace(1,1)
         df_[aspect]=df_[aspect].replace(2,1)
         df_[aspect]=df_[aspect].replace(3,1)
     df_ = df_.fillna(0)
     return df_
 
-def get_positive_data_frame(labels):
-    df_ = create_label_dataframe(labels)
-    for aspect in aspect_labels:
+def get_positive_data_frame(labels,list_label_aspect,transform_label_aspect):
+    df_ = create_label_dataframe(labels,list_label_aspect,transform_label_aspect)
+    for aspect in list_label_aspect:
         df_[aspect]=df_[aspect].replace(1,1)
         df_[aspect]=df_[aspect].replace(2,0)
         df_[aspect]=df_[aspect].replace(3,0)
     df_ = df_.fillna(0)
     return df_
 
-def get_negative_data_frame(labels):
-    df_ = create_label_dataframe(labels)
-    for aspect in aspect_labels:
+def get_negative_data_frame(labels,list_label_aspect,transform_label_aspect):
+    df_ = create_label_dataframe(labels,list_label_aspect,transform_label_aspect)
+    for aspect in list_label_aspect:
         df_[aspect]=df_[aspect].replace(1,0)
         df_[aspect]=df_[aspect].replace(2,1)
         df_[aspect]=df_[aspect].replace(3,0)
     df_ = df_.fillna(0)
     return df_
 
-def get_neutral_data_frame(labels):
-    df_ = create_label_dataframe(labels)
-    for aspect in aspect_labels:
+def get_neutral_data_frame(labels,list_label_aspect,transform_label_aspect):
+    df_ = create_label_dataframe(labels,list_label_aspect,transform_label_aspect)
+    for aspect in list_label_aspect:
         df_[aspect]=df_[aspect].replace(1,0)
         df_[aspect]=df_[aspect].replace(2,0)
         df_[aspect]=df_[aspect].replace(3,1)
     df_ = df_.fillna(0)
     return df_
-
