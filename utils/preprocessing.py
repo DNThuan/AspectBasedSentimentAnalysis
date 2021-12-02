@@ -1,5 +1,5 @@
-import preprocess_review as pre_revieew
-import preprocess_label as pre_label
+from utils import preprocess_review as pre_revieew
+from utils import preprocess_label as pre_label
 
 
 class Preprocessing_Review(object):
