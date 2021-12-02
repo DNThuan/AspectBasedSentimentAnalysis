@@ -37,11 +37,15 @@ class Preprocessing_Review(object):
 
 class Preprocessing_Label(object):
     def __init__(self, label = "",
+                      list_label_aspect=[],
+                      transform_label_aspect=None,
                       aspect = False,
                       positive = False,
                       negative = False,
                       neutral = False):
       self.label = label
+      self.list_label_aspect = list_label_aspect
+      self.transform_label_aspect = transform_label_aspect
       self.aspect = aspect
       self.positive = positive
       self.negative = negative
@@ -50,12 +54,12 @@ class Preprocessing_Label(object):
     def make_label_dataframe(self):
  
       if self.aspect:
-        df = pre_label.get_aspect_data_frame(self.label)
+        df = pre_label.get_aspect_data_frame(self.label,self.list_label_aspect,self.transform_label_aspect)
       elif self.positive:
-        df = pre_label.get_positive_data_frame(self.label)
+        df = pre_label.get_positive_data_frame(self.label,self.list_label_aspect,self.transform_label_aspect)
       elif self.negative:
-        df = pre_label.get_negative_data_frame(self.label)
+        df = pre_label.get_negative_data_frame(self.label,self.list_label_aspect,self.transform_label_aspect)
       else:
-        df = pre_label.get_neutral_data_frame(self.label)
+        df = pre_label.get_neutral_data_frame(self.label,self.list_label_aspect,self.transform_label_aspect)
 
       return df
