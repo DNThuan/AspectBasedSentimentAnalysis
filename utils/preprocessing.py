@@ -1,6 +1,6 @@
 
-import preprocess_review as pre_review
-import preprocess_label as pre_label
+from . import preprocess_review as pre_review
+from . import preprocess_label as pre_label
 
 class Preprocessing_Review(object):
     def __init__(self,texts ="",
@@ -35,7 +35,6 @@ class Preprocessing_Review(object):
         return result
 
 
-'''
 class Preprocessing_Label(object):
     def __init__(self, label = "",
                       aspect = False,
@@ -50,12 +49,11 @@ class Preprocessing_Label(object):
     
     def make_label_dataframe(self):
       if self.aspect:
-        df = get_aspect_data_frame(self.label)
+        df = pre_label.get_aspect_data_frame(self.label)
       elif self.positive:
-        df = get_positive_data_frame(self.label)
+        df = pre_label.get_positive_data_frame(self.label)
       elif self.negative:
-        df = get_negative_data_frame(self.label)
+        df = pre_label.get_negative_data_frame(self.label)
       else:
-        df = get_neutral_data_frame(self.label)
+        df = pre_label.get_neutral_data_frame(self.label)
       return df
-'''
