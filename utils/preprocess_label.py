@@ -3,18 +3,24 @@ import pandas as pd
 import json
 from sklearn.preprocessing import MultiLabelBinarizer
 
-aspect_path = "./Label/aspect.json"
-SA_path = "./Label/SA.json"
+aspect_path_1 = "./Label/aspect.json"
+SA_path_1 = "./Label/SA.json"
 
+aspect_path_2 = "/Label/aspect.json"
+SA_path_2 = "/Label/SA.json"
 
 def read_label(path):
   with open(path) as f:
     data = json.load(f)
   f.close()
   return data
-
-aspect_labels = read_label(aspect_path)
-AS_labels = read_label(SA_path)
+  
+try:
+  aspect_labels = read_label(aspect_path_1)
+  AS_labels = read_label(SA_path_1)
+except:
+  aspect_labels = read_label(aspect_path_2)
+  AS_labels = read_label(SA_path_2)
 
 transform_label_aspect = MultiLabelBinarizer().fit([aspect_labels])
 list_label_aspect = transform_label_aspect.classes_
