@@ -1,6 +1,6 @@
 
-from utils.preprocess_review import *
-from utils.preprocess_label import *
+import preprocess_review as pre_review
+import preprocess_label as pre_label
 
 class Preprocessing_Review(object):
     def __init__(self,texts ="",
@@ -21,21 +21,21 @@ class Preprocessing_Review(object):
     def process(self):
         result = self.texts
         if self.lower_text:
-          result = lower_text(result)
+          result = pre_review.lower_text(result)
         if self.delete_emoji:
-          result = delete_emoji(result)
+          result = pre_review.delete_emoji(result)
         if self.replace_symbol:
-          result = replace_symbol(result)
+          result = pre_review.replace_symbol(result)
         if self.delete_special_character:
-          result = delete_special_character(result)
+          result = pre_review.delete_special_character(result)
         if self.replace_negative_words:
-          result = replace_negative_words(result)
+          result = pre_review.replace_negative_words(result)
         if self.normalize_elongate_words:
-          result = normalize_elongate_words(result)
+          result = pre_review.normalize_elongate_words(result)
         return result
 
 
-
+'''
 class Preprocessing_Label(object):
     def __init__(self, label = "",
                       aspect = False,
@@ -58,3 +58,4 @@ class Preprocessing_Label(object):
       else:
         df = get_neutral_data_frame(self.label)
       return df
+'''
