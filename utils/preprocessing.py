@@ -1,6 +1,6 @@
-from utils import preprocess_review as pre_revieew
-from utils import preprocess_label as pre_label
 
+from utils.preprocess_review import *
+from utils.preprocess_label import *
 
 class Preprocessing_Review(object):
     def __init__(self,texts ="",
@@ -21,17 +21,17 @@ class Preprocessing_Review(object):
     def process(self):
         result = self.texts
         if self.lower_text:
-          result = pre_revieew.lower_text(result)
+          result = lower_text(result)
         if self.delete_emoji:
-          result = pre_revieew.delete_emoji(result)
+          result = delete_emoji(result)
         if self.replace_symbol:
-          result = pre_revieew.replace_symbol(result)
+          result = replace_symbol(result)
         if self.delete_special_character:
-          result = pre_revieew.delete_special_character(result)
+          result = delete_special_character(result)
         if self.replace_negative_words:
-          result = pre_revieew.replace_negative_words(result)
+          result = replace_negative_words(result)
         if self.normalize_elongate_words:
-          result = pre_revieew.normalize_elongate_words(result)
+          result = normalize_elongate_words(result)
         return result
 
 
@@ -50,11 +50,11 @@ class Preprocessing_Label(object):
     
     def make_label_dataframe(self):
       if self.aspect:
-        df = pre_label.get_aspect_data_frame(self.label)
+        df = get_aspect_data_frame(self.label)
       elif self.positive:
-        df = pre_label.get_positive_data_frame(self.label)
+        df = get_positive_data_frame(self.label)
       elif self.negative:
-        df = pre_label.get_negative_data_frame(self.label)
+        df = get_negative_data_frame(self.label)
       else:
-        df = pre_label.get_neutral_data_frame(self.label)
+        df = get_neutral_data_frame(self.label)
       return df
