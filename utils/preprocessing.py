@@ -61,5 +61,5 @@ class Preprocessing_Label(object):
         df = pre_label.get_negative_data_frame(self.label,self.list_label_aspect,self.transform_label_aspect)
       else:
         df = pre_label.get_neutral_data_frame(self.label,self.list_label_aspect,self.transform_label_aspect)
-
       return df
+
